@@ -41,14 +41,39 @@ export default {
   },
   methods: {
     completedTodo(index) {
-      this.$emit("completedTodo", index);
+      //this.$emit("completedTodo", index);
+      this.$store.commit("completeTodo", index);
+      this.$notify({
+        group: "foo",
+        title: "Completed",
+        text: "The Todo has been completed successfully!",
+        type: "success",
+      });
     },
     deleteTodo(index) {
-      this.$emit("deleteTodo", index);
+      //this.$emit("deleteTodo", index);
+
+      if (confirm("Are you sure to delete?")) {
+        //this.todos.splice(index, 1);
+        this.$store.commit("deleteTodo", index);
+        this.$notify({
+          group: "foo",
+          title: "Deleted",
+          text: "The Todo has been deleted successfully!",
+          type: "error",
+        });
+      }
     },
     editTodo() {
-      this.$emit("editTodo", { todo: this.todo, index: this.index });
+      //this.$emit("editTodo", { todo: this.todo, index: this.index });
+      this.$store.commit("editTodo", { todo: this.todo, index: this.index });
       this.editToggle = false;
+      this.$notify({
+        group: "foo",
+        title: "Updated",
+        text: "The Todo has been updated successfully!",
+        type: "success",
+      });
     },
   },
 };
